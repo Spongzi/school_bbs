@@ -3,6 +3,7 @@ package com.spongzi.controller;
 import com.spongzi.common.Result;
 import com.spongzi.domain.dto.UserLogin;
 import com.spongzi.service.UserService;
+import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
  *
  * @author spongzi
  */
+@Log
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -22,9 +24,11 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public Result<String> login(@RequestBody UserLogin userLogin) {
+    public Result<String> loginByPassword(@RequestBody UserLogin userLogin) {
+        log.info("userLogin" + userLogin);
         String username = userLogin.getUsername();
+        String phone = userLogin.getPhone();
         String password = userLogin.getPassword();
-        return Result.success(userService.login(username, password));
+        return Result.success(userService.loginByPassword(username, phone, password));
     }
 }

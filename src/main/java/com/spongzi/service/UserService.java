@@ -1,7 +1,6 @@
 package com.spongzi.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spongzi.common.Result;
 import com.spongzi.domain.User;
 
 /**
@@ -16,7 +15,8 @@ public interface UserService extends IService<User> {
      *
      * @param username 用户名 / 手机号
      * @param password 密码
+     * @param phone    手机号
      * @return 返回 token
      */
-    String login(String username, String password);
+    String loginByPassword(String username, String password, String phone);
 }

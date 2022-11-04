@@ -22,7 +22,8 @@ public enum BlogExceptionEnum {
     /**
      * 用户信息错误
      */
-    USER_PASSWORD_ERROR(20002, "用户密码不匹配", "用户密码不匹配")
+    USER_PASSWORD_ERROR(20002, "用户密码不匹配", "用户密码不匹配"),
+    USER_NOT_EXIST(20003, "用户不存在", "用户不存在")
     ;
 
     /**
