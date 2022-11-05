@@ -23,7 +23,11 @@ public enum BlogExceptionEnum {
      * 用户信息错误
      */
     USER_PASSWORD_ERROR(20002, "用户密码不匹配", "用户密码不匹配"),
-    USER_NOT_EXIST(20003, "用户不存在", "用户不存在")
+    USER_NOT_EXIST(20003, "用户不存在", "用户不存在"),
+    USER_PHONE_CODE_ERROR(20004, "用户验证码错误", "用户手机号验证码错误"),
+    USER_EXIST_ERROR(20005, "用户名已存在", "用户名已存在"),
+    USER_FREEZE(20006, "用户被冻结", "用户被冻结"),
+    USER_NOT_LOGIN(20007, "用户没有登录", "用户没有登陆请登录")
     ;
 
     /**

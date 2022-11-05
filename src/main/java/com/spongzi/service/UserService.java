@@ -2,6 +2,7 @@ package com.spongzi.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spongzi.domain.User;
+import com.spongzi.domain.dto.UserRegister;
 
 /**
  * @author spongzi
@@ -19,4 +20,28 @@ public interface UserService extends IService<User> {
      * @return 返回 token
      */
     String loginByPassword(String username, String password, String phone);
+
+    /**
+     * 用户注册
+     *
+     * @param userRegister 用户注册前端传来的信息
+     * @return 返回注册结果
+     */
+    String register(UserRegister userRegister);
+
+    /**
+     * 发送短信
+     *
+     * @param phone 接收短信的手机号
+     */
+    void sendMsg(String phone);
+
+    /**
+     * 密码加密
+     *
+     * @param password 要加密的密码
+     * @param salt     盐值
+     * @return 返回加密后的密码
+     */
+    String encryptionPassword(String password, String salt);
 }

@@ -17,3 +17,8 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:/mapper/*.xml
+aliyun:
+  secretId: "xxxx"
+  secretKey: "xxxx"
+  signName: "xxxx"
+  templateCode: "xxxx"
