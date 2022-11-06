@@ -5,8 +5,6 @@ import com.spongzi.domain.User;
 import com.spongzi.domain.dto.UserRegister;
 import com.spongzi.domain.vo.UserVo;
 
-import java.util.Map;
-
 /**
  * @author spongzi
  * @description 针对表【user(用户表信息)】的数据库操作Service
@@ -79,4 +77,12 @@ public interface UserService extends IService<User> {
      * @return 返回去敏后的数据
      */
     UserVo getSafeUser(User user);
+
+    /**
+     * 获取当前用户的信息
+     *
+     * @param id 要查询人的信息
+     * @return 返回当前用户的信息
+     */
+    UserVo info(Long id);
 }

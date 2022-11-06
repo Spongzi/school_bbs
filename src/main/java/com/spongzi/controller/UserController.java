@@ -3,7 +3,9 @@ package com.spongzi.controller;
 import com.spongzi.common.Result;
 import com.spongzi.domain.dto.UserLogin;
 import com.spongzi.domain.dto.UserRegister;
+import com.spongzi.domain.vo.UserVo;
 import com.spongzi.exception.BlogException;
+import com.spongzi.interceptor.UserHolder;
 import com.spongzi.service.UserService;
 import lombok.extern.java.Log;
 import org.apache.ibatis.annotations.Param;
@@ -54,6 +56,14 @@ public class UserController {
     public Result<String> register(@RequestBody UserRegister userRegister) {
         log.info("register");
         return Result.success(userService.registerByPhoneCode(userRegister));
+    }
+
+    @GetMapping(value = {"/info/{id}", "/info"})
+    public Result<UserVo> getUserInfo(@PathVariable(value = "id", required = false) Long id) {
+        if (id == null) {
+            id = UserHolder.getUserId();
+        }
+        return Result.success(userService.info(id));
     }
 
     @PostMapping("/sendMsg")

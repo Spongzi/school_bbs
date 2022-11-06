@@ -6,6 +6,7 @@ import com.spongzi.domain.dto.UserRegister;
 import com.spongzi.domain.vo.UserVo;
 import com.spongzi.exception.BlogException;
 import com.spongzi.exception.BlogExceptionEnum;
+import com.spongzi.interceptor.UserHolder;
 import com.spongzi.service.UserService;
 import com.spongzi.domain.User;
 import com.spongzi.mapper.UserMapper;
@@ -270,6 +271,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userVo.setCreateTime(user.getCreateTime());
         userVo.setIsDeleted(user.getIsDeleted());
         return userVo;
+    }
+
+    @Override
+    public UserVo info(Long id) {
+        User user = userMapper.selectById(id);
+        return getSafeUser(user);
     }
 }
 
