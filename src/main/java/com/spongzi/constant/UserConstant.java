@@ -50,4 +50,14 @@ public interface UserConstant {
      * 用户使用验证码登陆
      */
     String USER_LOGIN_BY_CHECK_CODE = "code";
+
+    /**
+     * 用户修改密码 原因：忘记密码
+     */
+    String USER_MODIFY_PASSWORD_FORGET = "forget";
+
+    /**
+     * 用户修改密码 原因：修改密码
+     */
+    String USER_MODIFY_PASSWORD_MODIFY = "modify";
 }

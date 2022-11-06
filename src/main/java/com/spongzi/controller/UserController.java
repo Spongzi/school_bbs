@@ -2,6 +2,7 @@ package com.spongzi.controller;
 
 import com.spongzi.common.Result;
 import com.spongzi.domain.dto.UserLogin;
+import com.spongzi.domain.dto.UserPasswordModify;
 import com.spongzi.domain.dto.UserRegister;
 import com.spongzi.domain.vo.UserVo;
 import com.spongzi.exception.BlogException;
@@ -64,6 +65,17 @@ public class UserController {
             id = UserHolder.getUserId();
         }
         return Result.success(userService.info(id));
+    }
+
+    /**
+     * 暂时简写，后面会拆开两个部分
+     *
+     * @param userPasswordModify 前端传来的参数
+     * @return 返回结果
+     */
+    @PostMapping("/password")
+    public Result<String> modifyPassword(@RequestBody UserPasswordModify userPasswordModify) {
+        return Result.success(userService.modifyPassword(userPasswordModify));
     }
 
     @PostMapping("/sendMsg")

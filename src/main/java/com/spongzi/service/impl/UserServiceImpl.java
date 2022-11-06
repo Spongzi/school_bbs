@@ -1,12 +1,13 @@
 package com.spongzi.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.spongzi.domain.dto.UserPasswordModify;
 import com.spongzi.domain.dto.UserRegister;
 import com.spongzi.domain.vo.UserVo;
 import com.spongzi.exception.BlogException;
 import com.spongzi.exception.BlogExceptionEnum;
-import com.spongzi.interceptor.UserHolder;
 import com.spongzi.service.UserService;
 import com.spongzi.domain.User;
 import com.spongzi.mapper.UserMapper;
@@ -17,14 +18,12 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -75,9 +74,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!dbPassword.equals(password)) {
             throw new BlogException(BlogExceptionEnum.USER_PASSWORD_ERROR);
         }
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("token", generateToken(user));
-        map.put("user", getSafeUser(user));
         return generateToken(user);
     }
 
@@ -130,7 +126,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 从redis中获取对应的code
         String checkCode = (String) redisTemplate.opsForValue().get(CHECK_CODE + phone);
         if (!code.equals(checkCode)) {
-            throw new BlogException(BlogExceptionEnum.USER_PHONE_CODE_ERROR);
+            throw new BlogException(BlogExceptionEnum.USER_EMAIL_CODE_ERROR);
         }
 
         // 检查数据库中是否存在该用户，如果存在就提示用户已存在
@@ -181,7 +177,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 从redis中获取对应的code
         String checkCode = (String) redisTemplate.opsForValue().get(CHECK_CODE + email);
         if (!code.equals(checkCode)) {
-            throw new BlogException(BlogExceptionEnum.USER_PHONE_CODE_ERROR);
+            throw new BlogException(BlogExceptionEnum.USER_EMAIL_CODE_ERROR);
         }
 
         // 检查数据库中是否存在该用户，如果存在就提示用户已存在
@@ -241,6 +237,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         redisTemplate.opsForValue().set(CHECK_CODE + email, code, Duration.ofMinutes(5));
     }
 
+    @Override
     public String encryptionPassword(String password, String username) {
         return DigestUtils.md5DigestAsHex((password + password + username)
                 .getBytes(StandardCharsets.UTF_8));
@@ -276,7 +273,57 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public UserVo info(Long id) {
         User user = userMapper.selectById(id);
+        if (user == null) {
+            throw new BlogException(BlogExceptionEnum.USER_NOT_LOGIN);
+        }
         return getSafeUser(user);
+    }
+
+    @Override
+    public String modifyPassword(UserPasswordModify userPasswordModify) {
+        if (userPasswordModify == null) {
+            throw new BlogException(BlogExceptionEnum.PARAM_ERROR);
+        }
+        String type = userPasswordModify.getType();
+        String email = userPasswordModify.getEmail();
+        String oldPassword = userPasswordModify.getOldPassword();
+        String newPassword = userPasswordModify.getNewPassword();
+        String code = userPasswordModify.getCode();
+
+        // 检查该用户是否存在
+        LambdaQueryWrapper<User> userWrapper = new LambdaQueryWrapper<>();
+        userWrapper.eq(User::getEmail, email);
+        User user = userMapper.selectOne(userWrapper);
+        String checkCode = (String) redisTemplate.opsForValue().get(CHECK_CODE + email);
+        if (user == null) {
+            throw new BlogException(BlogExceptionEnum.USER_NOT_EXIST);
+        }
+        if (checkCode == null) {
+            throw new BlogException(BlogExceptionEnum.USER_GET_CODE_ERROR);
+        }
+        if (!checkCode.equals(code)) {
+            throw new BlogException(BlogExceptionEnum.USER_EMAIL_CODE_ERROR);
+        }
+        if (USER_MODIFY_PASSWORD_MODIFY.equals(type)) {
+            if (oldPassword.equals(newPassword)) {
+                throw new BlogException(BlogExceptionEnum.USER_OLD_PASSWORD_SAME);
+            }
+            String password = encryptionPassword(oldPassword, user.getUsername());
+            if (!password.equals(oldPassword)) {
+                throw new BlogException(BlogExceptionEnum.USER_OLD_PASSWORD_ERROR);
+            }
+            newPassword = encryptionPassword(newPassword, user.getUsername());
+            user.setPassword(newPassword);
+            userMapper.updateById(user);
+            return "修改密码成功！";
+        }
+        if (USER_MODIFY_PASSWORD_FORGET.equals(type)) {
+            newPassword = encryptionPassword(newPassword, user.getUsername());
+            user.setPassword(newPassword);
+            user.setPassword(newPassword);
+            return "修改密码成功";
+        }
+        return "修改密码成功";
     }
 }
 

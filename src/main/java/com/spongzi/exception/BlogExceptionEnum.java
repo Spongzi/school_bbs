@@ -24,10 +24,13 @@ public enum BlogExceptionEnum {
      */
     USER_PASSWORD_ERROR(20002, "用户密码不匹配", "用户密码不匹配"),
     USER_NOT_EXIST(20003, "用户不存在", "用户不存在"),
-    USER_PHONE_CODE_ERROR(20004, "用户验证码错误", "用户手机号验证码错误"),
+    USER_EMAIL_CODE_ERROR(20004, "用户验证码错误", "用户手机号验证码错误"),
     USER_EXIST_ERROR(20005, "用户名已存在", "用户名已存在"),
     USER_FREEZE(20006, "用户被冻结", "用户被冻结"),
-    USER_NOT_LOGIN(20007, "用户没有登录", "用户没有登陆请登录")
+    USER_NOT_LOGIN(20007, "用户没有登录", "用户没有登陆请登录"),
+    USER_OLD_PASSWORD_ERROR(20008, "用户旧密码错误", "用户旧密码错误"),
+    USER_OLD_PASSWORD_SAME(20009, "用户新密码与就旧密码相同", "用户新密码与旧密码相同"),
+    USER_GET_CODE_ERROR(20010, "用户获取验证码失败", "用户获取验证码失败，请重新获取")
     ;
 
     /**

@@ -41,6 +41,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         User user = new User();
         user.setId(Long.valueOf(id));
+        user.setEmail(email);
         user.setPhone(mobile);
 
         UserHolder.set(user);

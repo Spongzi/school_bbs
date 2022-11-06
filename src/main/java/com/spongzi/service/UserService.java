@@ -2,6 +2,7 @@ package com.spongzi.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spongzi.domain.User;
+import com.spongzi.domain.dto.UserPasswordModify;
 import com.spongzi.domain.dto.UserRegister;
 import com.spongzi.domain.vo.UserVo;
 
@@ -85,4 +86,12 @@ public interface UserService extends IService<User> {
      * @return 返回当前用户的信息
      */
     UserVo info(Long id);
+
+    /**
+     * 修改密码
+     *
+     * @param userPasswordModify 用户密码修改
+     * @return 返回修改结果
+     */
+    String modifyPassword(UserPasswordModify userPasswordModify);
 }
