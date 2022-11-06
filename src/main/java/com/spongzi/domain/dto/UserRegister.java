@@ -25,7 +25,14 @@ public class UserRegister {
     private String phone;
 
     /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
      * 手机号接收的验证码
      */
     private String code;
+
+
 }

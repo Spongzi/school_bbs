@@ -1,48 +1,32 @@
-package com.spongzi.domain;
+package com.spongzi.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 用户表信息
+ * 展示的User信息 (去敏后的数据)
  *
  * @author spongzi
- * @TableName user
  */
-@TableName(value = "user")
 @Data
-public class User implements Serializable {
+public class UserVo implements Serializable {
+
+    private static final long serialVersionUID = 4204266289075040657L;
+
     /**
      * 主键
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
      * 用户名
      */
     private String username;
-
-    /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 身份证号
-     */
-    private String idCard;
-
-    /**
-     * 真实姓名
-     */
-    private String realName;
 
     /**
      * 性别
@@ -75,14 +59,14 @@ public class User implements Serializable {
     private String age;
 
     /**
-     * 头像
-     */
-    private String avatar;
-
-    /**
      * 状态
      */
     private String userStatus;
+
+    /**
+     * 头像
+     */
+    private String avatar;
 
     /**
      * 更新时间
@@ -99,6 +83,4 @@ public class User implements Serializable {
      */
     private Integer isDeleted;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

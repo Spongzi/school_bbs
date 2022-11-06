@@ -9,7 +9,23 @@ import lombok.Data;
  */
 @Data
 public class UserLogin {
+    /**
+     * 用户登录的方式
+     */
+    private String type;
+
+    /**
+     * 用户的账号名称
+     */
     private String username;
-    private String phone;
+
+    /**
+     * 用户的邮箱账号
+     */
+    private String email;
+
+    /**
+     * 账号的密码
+     */
     private String password;
 }

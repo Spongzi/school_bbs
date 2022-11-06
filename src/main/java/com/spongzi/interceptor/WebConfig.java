@@ -17,7 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
     String[] excludePathPatterns = new String[]{
             "/user/login",
             "/user/register",
-            "/user/sendMsg"
+            "/user/sendMsg",
+            "/user/sendEmail"
     };
 
     @Override

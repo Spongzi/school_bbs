@@ -35,6 +35,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 4. 如果token正常可用, 方行
         // 解析token获取id, 手机号, 构造user对象
         Claims claims = TokenUtil.getClaims(token);
+        String email = (String) claims.get("email");
         String mobile = (String) claims.get("phone");
         Integer id = (Integer) claims.get("id");
 

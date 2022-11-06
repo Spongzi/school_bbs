@@ -34,5 +34,20 @@ public interface UserConstant {
     /**
      * 用户正常状态
      */
-    String USER_NORMAL = "1";
+    String USER_NORMAL = "0";
+
+    /**
+     * 用户被冻结
+     */
+    String USER_FREEZE = "1";
+
+    /**
+     * 用户使用密码登录
+     */
+    String USER_LOGIN_BY_PASSWORD = "password";
+
+    /**
+     * 用户使用验证码登陆
+     */
+    String USER_LOGIN_BY_CHECK_CODE = "code";
 }

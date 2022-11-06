@@ -3,6 +3,9 @@ package com.spongzi.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spongzi.domain.User;
 import com.spongzi.domain.dto.UserRegister;
+import com.spongzi.domain.vo.UserVo;
+
+import java.util.Map;
 
 /**
  * @author spongzi
@@ -22,6 +25,23 @@ public interface UserService extends IService<User> {
     String loginByPassword(String username, String password, String phone);
 
     /**
+     * 用户登录接口(使用验证码登录)
+     *
+     * @param email    登录的账号
+     * @param password check_code
+     * @return 返回token
+     */
+    String loginByCheckCode(String email, String password);
+
+    /**
+     * 用户注册
+     *
+     * @param userRegister 用户注册前端传来的信息
+     * @return 返回注册结果
+     */
+    String registerByPhoneCode(UserRegister userRegister);
+
+    /**
      * 用户注册
      *
      * @param userRegister 用户注册前端传来的信息
@@ -37,6 +57,13 @@ public interface UserService extends IService<User> {
     void sendMsg(String phone);
 
     /**
+     * 发送短信
+     *
+     * @param email 接收短信的邮箱
+     */
+    void sendEmailMsg(String email);
+
+    /**
      * 密码加密
      *
      * @param password 要加密的密码
@@ -44,4 +71,12 @@ public interface UserService extends IService<User> {
      * @return 返回加密后的密码
      */
     String encryptionPassword(String password, String salt);
+
+    /**
+     * 数据去敏
+     *
+     * @param user 接收用户参数
+     * @return 返回去敏后的数据
+     */
+    UserVo getSafeUser(User user);
 }

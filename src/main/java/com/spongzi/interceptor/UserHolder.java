@@ -47,6 +47,15 @@ public class UserHolder {
     }
 
     /**
+     * 从当前线程,获取用户对象邮箱账号
+     *
+     * @return 获取到的邮箱
+     */
+    public static String getEmail() {
+        return t1.get().getEmail();
+    }
+
+    /**
      * 清空线程
      */
     public static void remove() {
