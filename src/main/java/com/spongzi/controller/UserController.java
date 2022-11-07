@@ -1,9 +1,11 @@
 package com.spongzi.controller;
 
 import com.spongzi.common.Result;
-import com.spongzi.domain.dto.UserLogin;
-import com.spongzi.domain.dto.UserPasswordModify;
-import com.spongzi.domain.dto.UserRegister;
+import com.spongzi.domain.User;
+import com.spongzi.domain.dto.UserLoginDto;
+import com.spongzi.domain.dto.UserModifyDto;
+import com.spongzi.domain.dto.UserPasswordModifyDto;
+import com.spongzi.domain.dto.UserRegisterDto;
 import com.spongzi.domain.vo.UserVo;
 import com.spongzi.exception.BlogException;
 import com.spongzi.interceptor.UserHolder;
@@ -13,8 +15,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-
-import java.util.Map;
 
 import static com.spongzi.constant.UserConstant.USER_LOGIN_BY_CHECK_CODE;
 import static com.spongzi.constant.UserConstant.USER_LOGIN_BY_PASSWORD;
@@ -32,7 +32,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public Result<String> loginByPassword(@RequestBody UserLogin userLogin) {
+    public Result<String> loginByPassword(@RequestBody UserLoginDto userLogin) {
         log.info("userLogin");
         String type = userLogin.getType();
         String username = userLogin.getUsername();
@@ -48,15 +48,15 @@ public class UserController {
     }
 
     @PostMapping("/register/future")
-    public Result<String> registerPhoneCode(@RequestBody UserRegister userRegister) {
+    public Result<String> registerPhoneCode(@RequestBody UserRegisterDto userRegisterDto) {
         log.info("register");
-        return Result.success(userService.registerByPhoneCode(userRegister));
+        return Result.success(userService.registerByPhoneCode(userRegisterDto));
     }
 
     @PostMapping("/register")
-    public Result<String> register(@RequestBody UserRegister userRegister) {
+    public Result<String> register(@RequestBody UserRegisterDto userRegisterDto) {
         log.info("register");
-        return Result.success(userService.registerByPhoneCode(userRegister));
+        return Result.success(userService.registerByPhoneCode(userRegisterDto));
     }
 
     @GetMapping(value = {"/info/{id}", "/info"})
@@ -70,12 +70,17 @@ public class UserController {
     /**
      * 暂时简写，后面会拆开两个部分
      *
-     * @param userPasswordModify 前端传来的参数
+     * @param userPasswordModifyDto 前端传来的参数
      * @return 返回结果
      */
     @PostMapping("/password")
-    public Result<String> modifyPassword(@RequestBody UserPasswordModify userPasswordModify) {
-        return Result.success(userService.modifyPassword(userPasswordModify));
+    public Result<String> modifyPassword(@RequestBody UserPasswordModifyDto userPasswordModifyDto) {
+        return Result.success(userService.modifyPassword(userPasswordModifyDto));
+    }
+
+    @PostMapping("/modify")
+    public Result<String> modifyUserInfo(@RequestBody UserModifyDto userModifyDto) {
+        return Result.success(userService.modifyUserInfo(userModifyDto));
     }
 
     @PostMapping("/sendMsg")

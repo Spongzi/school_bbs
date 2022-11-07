@@ -1,13 +1,14 @@
 package com.spongzi.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.spongzi.domain.dto.UserPasswordModify;
-import com.spongzi.domain.dto.UserRegister;
+import com.spongzi.domain.dto.UserModifyDto;
+import com.spongzi.domain.dto.UserPasswordModifyDto;
+import com.spongzi.domain.dto.UserRegisterDto;
 import com.spongzi.domain.vo.UserVo;
 import com.spongzi.exception.BlogException;
 import com.spongzi.exception.BlogExceptionEnum;
+import com.spongzi.interceptor.UserHolder;
 import com.spongzi.service.UserService;
 import com.spongzi.domain.User;
 import com.spongzi.mapper.UserMapper;
@@ -63,6 +64,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (user == null) {
             throw new BlogException(BlogExceptionEnum.USER_NOT_EXIST);
         }
+        if (Objects.equals(user.getUserStatus(), USER_FREEZE)) {
+            throw new BlogException(BlogExceptionEnum.USER_FREEZE);
+        }
         log.info("user info" + user);
 
         String dbPassword = user.getPassword();
@@ -99,11 +103,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String registerByPhoneCode(UserRegister userRegister) {
-        String username = userRegister.getUsername();
-        String password = userRegister.getPassword();
-        String phone = userRegister.getPhone();
-        String code = userRegister.getCode();
+    public String registerByPhoneCode(UserRegisterDto userRegisterDto) {
+        String username = userRegisterDto.getUsername();
+        String password = userRegisterDto.getPassword();
+        String phone = userRegisterDto.getPhone();
+        String code = userRegisterDto.getCode();
 
         // 校验是否包含特殊字符 m
         String regEx = "[ _`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]|\n|\r|\t";
@@ -153,11 +157,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String register(UserRegister userRegister) {
-        String username = userRegister.getUsername();
-        String password = userRegister.getPassword();
-        String email = userRegister.getEmail();
-        String code = userRegister.getCode();
+    public String register(UserRegisterDto userRegisterDto) {
+        String username = userRegisterDto.getUsername();
+        String password = userRegisterDto.getPassword();
+        String email = userRegisterDto.getEmail();
+        String code = userRegisterDto.getCode();
 
         // 校验是否包含特殊字符 m
         String regEx = "[ _`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]|\n|\r|\t";
@@ -280,15 +284,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String modifyPassword(UserPasswordModify userPasswordModify) {
-        if (userPasswordModify == null) {
+    public String modifyPassword(UserPasswordModifyDto userPasswordModifyDto) {
+        if (userPasswordModifyDto == null) {
             throw new BlogException(BlogExceptionEnum.PARAM_ERROR);
         }
-        String type = userPasswordModify.getType();
-        String email = userPasswordModify.getEmail();
-        String oldPassword = userPasswordModify.getOldPassword();
-        String newPassword = userPasswordModify.getNewPassword();
-        String code = userPasswordModify.getCode();
+        String type = userPasswordModifyDto.getType();
+        String email = userPasswordModifyDto.getEmail();
+        String oldPassword = userPasswordModifyDto.getOldPassword();
+        String newPassword = userPasswordModifyDto.getNewPassword();
+        String code = userPasswordModifyDto.getCode();
 
         // 检查该用户是否存在
         LambdaQueryWrapper<User> userWrapper = new LambdaQueryWrapper<>();
@@ -324,6 +328,45 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return "修改密码成功";
         }
         return "修改密码成功";
+    }
+
+    @Override
+    public String modifyUserInfo(UserModifyDto userModifyDto) {
+        if (userModifyDto == null) {
+            throw new BlogException(BlogExceptionEnum.PARAM_ERROR);
+        }
+        Long userId = UserHolder.getUserId();
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new BlogException(BlogExceptionEnum.USER_NOT_EXIST);
+        }
+        String username = userModifyDto.getUsername();
+        String phone = userModifyDto.getPhone();
+        String address = userModifyDto.getAddress();
+        String age = userModifyDto.getAge();
+        String gender = userModifyDto.getGender();
+        String avatar = userModifyDto.getAvatar();
+        if (!StringUtils.isBlank(username)) {
+            user.setUsername(username);
+        }
+        if (!StringUtils.isBlank(phone)) {
+            user.setPhone(phone);
+        }
+        if (!StringUtils.isBlank(address)) {
+            user.setAddress(address);
+        }
+        if (!StringUtils.isBlank(age)) {
+            user.setAge(age);
+        }
+        if (!StringUtils.isBlank(gender)) {
+            user.setGender(gender);
+        }
+        if (!StringUtils.isBlank(avatar)) {
+            user.setAvatar(avatar);
+        }
+        // 更新数据库用户信息
+        userMapper.updateById(user);
+        return null;
     }
 }
 

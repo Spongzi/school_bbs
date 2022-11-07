@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2022/11/06
  */
 @Data
-public class UserPasswordModify {
+public class UserPasswordModifyDto {
     /**
      * 类型
      * 忘记密码 forget, 修改密码 modify

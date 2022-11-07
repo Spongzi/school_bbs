@@ -59,7 +59,7 @@ public class UserVo implements Serializable {
     private String age;
 
     /**
-     * 状态
+     * 状态 是否被封号 正常 - 0 封号 - 1
      */
     private String userStatus;
 

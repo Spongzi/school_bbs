@@ -18,7 +18,7 @@ public class TokenUtil {
     /**
      * TOKEN的有效期1小时（S）
      */
-    private static final int TOKEN_TIME_OUT = 3_600;
+    private static final int TOKEN_TIME_OUT = 3_600 * 24 * 7;
 
     /**
      * 加密KEY
@@ -38,7 +38,7 @@ public class TokenUtil {
                 //加密方式
                 .signWith(SignatureAlgorithm.HS512, TOKEN_SECRET)
                 //过期时间戳
-                .setExpiration(new Date(currentTime + TOKEN_TIME_OUT * 24 * 7))
+                .setExpiration(new Date(currentTime + TOKEN_TIME_OUT))
                 .addClaims(params)
                 .compact();
     }

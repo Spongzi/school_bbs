@@ -2,8 +2,9 @@ package com.spongzi.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spongzi.domain.User;
-import com.spongzi.domain.dto.UserPasswordModify;
-import com.spongzi.domain.dto.UserRegister;
+import com.spongzi.domain.dto.UserModifyDto;
+import com.spongzi.domain.dto.UserPasswordModifyDto;
+import com.spongzi.domain.dto.UserRegisterDto;
 import com.spongzi.domain.vo.UserVo;
 
 /**
@@ -35,18 +36,18 @@ public interface UserService extends IService<User> {
     /**
      * 用户注册
      *
-     * @param userRegister 用户注册前端传来的信息
+     * @param userRegisterDto 用户注册前端传来的信息
      * @return 返回注册结果
      */
-    String registerByPhoneCode(UserRegister userRegister);
+    String registerByPhoneCode(UserRegisterDto userRegisterDto);
 
     /**
      * 用户注册
      *
-     * @param userRegister 用户注册前端传来的信息
+     * @param userRegisterDto 用户注册前端传来的信息
      * @return 返回注册结果
      */
-    String register(UserRegister userRegister);
+    String register(UserRegisterDto userRegisterDto);
 
     /**
      * 发送短信
@@ -90,8 +91,16 @@ public interface UserService extends IService<User> {
     /**
      * 修改密码
      *
-     * @param userPasswordModify 用户密码修改
+     * @param userPasswordModifyDto 用户密码修改
      * @return 返回修改结果
      */
-    String modifyPassword(UserPasswordModify userPasswordModify);
+    String modifyPassword(UserPasswordModifyDto userPasswordModifyDto);
+
+    /**
+     * 修改用户信息
+     *
+     * @param userModifyDto 用户修改dto
+     * @return {@link String}
+     */
+    String modifyUserInfo(UserModifyDto userModifyDto);
 }
