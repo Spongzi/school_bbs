@@ -56,14 +56,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BlogException(BlogExceptionEnum.PARAM_ERROR);
         }
         log.info("test");
-        LambdaQueryWrapper<User> userWrapper = new LambdaQueryWrapper<>();
-        log.info(String.valueOf(StringUtils.isBlank(username)));
-        userWrapper.eq(!StringUtils.isBlank(username), User::getUsername, username);
-        userWrapper.eq(!StringUtils.isBlank(email), User::getEmail, email);
-        User user = userMapper.selectOne(userWrapper);
-        if (user == null) {
-            throw new BlogException(BlogExceptionEnum.USER_NOT_EXIST);
-        }
+        User user = findUser(null, username, email);
         if (Objects.equals(user.getUserStatus(), USER_FREEZE)) {
             throw new BlogException(BlogExceptionEnum.USER_FREEZE);
         }
@@ -367,6 +360,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 更新数据库用户信息
         userMapper.updateById(user);
         return null;
+    }
+
+    @Override
+    public User findUser(Long id, String username, String email) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(id != null, User::getId, id);
+        queryWrapper.eq(!StringUtils.isBlank(username), User::getUsername, username);
+        queryWrapper.eq(!StringUtils.isBlank(email), User::getEmail, email);
+        User user = userMapper.selectOne(queryWrapper);
+        if (user == null) {
+            throw new BlogException(BlogExceptionEnum.USER_NOT_EXIST);
+        }
+        return user;
     }
 }
 

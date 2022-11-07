@@ -1,5 +1,6 @@
 package com.spongzi;
 
+import com.spongzi.service.UserService;
 import com.spongzi.utlis.SendEmail;
 import com.spongzi.utlis.TokenUtil;
 import io.jsonwebtoken.Claims;
@@ -16,6 +17,9 @@ class BlogSchoolBackendApplicationTests {
     @Resource
     private SendEmail sendEmail;
 
+    @Resource
+    private UserService userService;
+
     @Test
     void contextLoads() {
         sendEmail.sendEmail("lxlandsx@outlook.com", "123456");
@@ -25,6 +29,11 @@ class BlogSchoolBackendApplicationTests {
     void testLoginStatus() {
         Claims verifyToken = TokenUtil.getClaims("eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2Njc3MjgwMTMsInBob25lIjoiMTc3NjU2MzQ3MzEiLCJpZCI6MiwiZW1haWwiOiIyNTA1NTU1MjMxQHFxLmNvbSIsInVzZXJuYW1lIjoiYWRtaW4ifQ.xjLlUplNj6j0Y4LvWbOLp5o_03ZBsZBH5D6bedBTGr7v8tFxqpbd0ZlWdpu9PPySX2kePAb4e-vmmodouRYTvw");
         System.out.println(verifyToken);
+    }
+
+    @Test
+    void testPassword() {
+        System.out.println(userService.encryptionPassword("12345678", "spongzi_admin"));
     }
 
 }

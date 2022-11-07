@@ -19,7 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
             "/user/register",
             "/user/sendMsg",
             "/user/sendEmail",
-            "/user/password"
+            "/user/password",
+            "/admin/login"
     };
 
     @Override

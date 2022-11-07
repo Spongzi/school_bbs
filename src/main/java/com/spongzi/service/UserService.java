@@ -19,10 +19,10 @@ public interface UserService extends IService<User> {
      *
      * @param username 用户名 / 手机号
      * @param password 密码
-     * @param phone    手机号
+     * @param email    手机号
      * @return 返回 token
      */
-    String loginByPassword(String username, String password, String phone);
+    String loginByPassword(String username, String email, String password);
 
     /**
      * 用户登录接口(使用验证码登录)
@@ -103,4 +103,14 @@ public interface UserService extends IService<User> {
      * @return {@link String}
      */
     String modifyUserInfo(UserModifyDto userModifyDto);
+
+    /**
+     * 找到用户
+     *
+     * @param id       id
+     * @param username 用户名
+     * @param email    电子邮件
+     * @return {@link User}
+     */
+    User findUser(Long id, String username, String email);
 }

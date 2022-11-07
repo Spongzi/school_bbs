@@ -60,4 +60,9 @@ public interface UserConstant {
      * 用户修改密码 原因：修改密码
      */
     String USER_MODIFY_PASSWORD_MODIFY = "modify";
+
+    /**
+     * 用户管理
+     */
+    String USER_ADMIN = "1";
 }
