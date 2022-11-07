@@ -5,13 +5,17 @@ import com.spongzi.exception.BlogException;
 import com.spongzi.exception.BlogExceptionEnum;
 import com.spongzi.utlis.TokenUtil;
 import io.jsonwebtoken.Claims;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+
+import static com.spongzi.constant.UserConstant.TOKEN_REDIS;
 
 /**
  * 登录拦截器
@@ -20,6 +24,9 @@ import java.io.PrintWriter;
  */
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
+
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -30,6 +37,16 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 3. 如果token失效, 返回状态码401, 拦截
         if (!verifyToken) {
             response.setStatus(401);
+            throw new BlogException(BlogExceptionEnum.USER_NOT_LOGIN);
+        }
+        // 与存在redis中的数据进行对比
+        Claims data = TokenUtil.getClaims(token);
+        String id1 = data.get("id").toString();
+        String redisToken = redisTemplate.opsForValue().get(TOKEN_REDIS + id1);
+        if (redisToken == null) {
+            throw new BlogException(BlogExceptionEnum.USER_NOT_LOGIN);
+        }
+        if (!redisToken.equals(token)) {
             throw new BlogException(BlogExceptionEnum.USER_NOT_LOGIN);
         }
         // 4. 如果token正常可用, 方行

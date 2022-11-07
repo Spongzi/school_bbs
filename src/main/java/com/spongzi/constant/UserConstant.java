@@ -65,4 +65,14 @@ public interface UserConstant {
      * 用户管理
      */
     String USER_ADMIN = "1";
+
+    /**
+     * 令牌 存入redis前缀
+     */
+    String TOKEN_REDIS = "token";
+
+    /**
+     * 令牌过期
+     */
+    int TOKEN_EXPIRED = 7;
 }

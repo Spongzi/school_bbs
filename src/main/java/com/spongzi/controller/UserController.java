@@ -13,6 +13,7 @@ import com.spongzi.service.UserService;
 import lombok.extern.java.Log;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
@@ -82,6 +83,12 @@ public class UserController {
     public Result<String> modifyUserInfo(@RequestBody UserModifyDto userModifyDto) {
         return Result.success(userService.modifyUserInfo(userModifyDto));
     }
+
+    @PostMapping("/upload")
+    public Result<String> uploadHead(@RequestParam("file")MultipartFile file) {
+        return Result.success(userService.upload(file));
+    }
+
 
     @PostMapping("/sendMsg")
     public Result<String> getPhoneCode(@Param("phone") String phone) {

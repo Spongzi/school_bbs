@@ -14,12 +14,14 @@ import com.spongzi.domain.User;
 import com.spongzi.mapper.UserMapper;
 import com.spongzi.utlis.SendEmail;
 import com.spongzi.utlis.TokenUtil;
+import com.spongzi.utlis.UploadImage;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
@@ -48,6 +50,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     @Resource
+    private UploadImage uploadImage;
+
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
@@ -71,7 +76,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!dbPassword.equals(password)) {
             throw new BlogException(BlogExceptionEnum.USER_PASSWORD_ERROR);
         }
-        return generateToken(user);
+        String token = generateToken(user);
+        return token;
     }
 
     @Override
@@ -246,7 +252,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         map.put("username", user.getUsername());
         map.put("phone", user.getPhone());
         map.put("email", user.getEmail());
-        return TokenUtil.getToken(map);
+        String token = TokenUtil.getToken(map);
+        redisTemplate.opsForValue().set(TOKEN_REDIS + user.getId(), token, Duration.ofDays(TOKEN_EXPIRED));
+        return token;
     }
 
     @Override
@@ -338,7 +346,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String address = userModifyDto.getAddress();
         String age = userModifyDto.getAge();
         String gender = userModifyDto.getGender();
-        String avatar = userModifyDto.getAvatar();
         if (!StringUtils.isBlank(username)) {
             user.setUsername(username);
         }
@@ -353,9 +360,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         if (!StringUtils.isBlank(gender)) {
             user.setGender(gender);
-        }
-        if (!StringUtils.isBlank(avatar)) {
-            user.setAvatar(avatar);
         }
         // 更新数据库用户信息
         userMapper.updateById(user);
@@ -373,6 +377,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BlogException(BlogExceptionEnum.USER_NOT_EXIST);
         }
         return user;
+    }
+
+    @Override
+    public String upload(MultipartFile file) {
+        String headUrl = uploadImage.upload(file);
+        Long userId = UserHolder.getUserId();
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new BlogException(BlogExceptionEnum.USER_NOT_EXIST);
+        }
+        user.setAvatar(headUrl);
+        userMapper.updateById(user);
+        return "修改头像成功";
     }
 }
 

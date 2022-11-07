@@ -18,7 +18,7 @@ public class TokenUtil {
     /**
      * TOKEN的有效期1小时（S）
      */
-    private static final int TOKEN_TIME_OUT = 3_600 * 24 * 7;
+    private static final int TOKEN_TIME_OUT = 3_600 * 24 * 7 * 1000;
 
     /**
      * 加密KEY

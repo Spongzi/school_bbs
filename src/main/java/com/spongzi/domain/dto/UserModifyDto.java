@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -43,9 +44,4 @@ public class UserModifyDto implements Serializable {
      * 年龄
      */
     private String age;
-
-    /**
-     * 头像
-     */
-    private String avatar;
 }

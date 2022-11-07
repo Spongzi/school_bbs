@@ -37,3 +37,7 @@ aliyun:
   secretKey: "xxxx"
   signName: "xxxx"
   templateCode: "xxxx"
+qiqiu:
+  accessKey: "eDbUz-paiwJwECZkWTiC5jiuoWiBrN6S_xPu1_N3"
+  secretKey: "YwM49SSnv5TJltC67ukNFp5XIimjoNwiVk-x3msW"
+  bucket: "bbs-school-nesoft"
