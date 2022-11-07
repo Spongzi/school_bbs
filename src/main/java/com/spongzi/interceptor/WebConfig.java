@@ -1,6 +1,7 @@
 package com.spongzi.interceptor;
 
 import lombok.extern.java.Log;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -26,8 +27,13 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         log.info("我执行了~~~~");
-        registry.addInterceptor(new LoginInterceptor())
+        registry.addInterceptor(getInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(excludePathPatterns);
+    }
+
+    @Bean
+    public LoginInterceptor getInterceptor() {
+        return new LoginInterceptor();
     }
 }

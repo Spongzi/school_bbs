@@ -76,8 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!dbPassword.equals(password)) {
             throw new BlogException(BlogExceptionEnum.USER_PASSWORD_ERROR);
         }
-        String token = generateToken(user);
-        return token;
+        return generateToken(user);
     }
 
     @Override
@@ -253,7 +252,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         map.put("phone", user.getPhone());
         map.put("email", user.getEmail());
         String token = TokenUtil.getToken(map);
-        redisTemplate.opsForValue().set(TOKEN_REDIS + user.getId(), token, Duration.ofDays(TOKEN_EXPIRED));
+        redisTemplate.opsForValue().set(TOKEN_REDIS + user.getId().toString(), token, Duration.ofDays(TOKEN_EXPIRED));
         return token;
     }
 

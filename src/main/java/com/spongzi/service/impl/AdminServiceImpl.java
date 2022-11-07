@@ -1,8 +1,12 @@
 package com.spongzi.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spongzi.domain.User;
 import com.spongzi.domain.dto.UserLoginDto;
+import com.spongzi.domain.vo.UserVo;
 import com.spongzi.exception.BlogException;
 import com.spongzi.exception.BlogExceptionEnum;
 import com.spongzi.mapper.UserMapper;
@@ -13,6 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.spongzi.constant.UserConstant.*;
 
@@ -60,4 +67,30 @@ public class AdminServiceImpl extends ServiceImpl<UserMapper, User> implements A
         log.info(token);
         return token;
     }
+
+    @Override
+    public Page<UserVo> selectUser(String page, String pagesize, String username, String gender, String status) {
+        Page<User> userPage = new Page<>(Integer.parseInt(page), Integer.parseInt(pagesize));
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(!StringUtils.isBlank(username), User::getUsername, username);
+        queryWrapper.eq(!StringUtils.isBlank(gender), User::getGender, gender);
+        queryWrapper.eq(!StringUtils.isBlank(status), User::getUserStatus, status);
+        userMapper.selectPage(userPage, queryWrapper);
+        Page<UserVo> userVoPage = new Page<>();
+
+        // 进行去敏操作
+        List<User> records = userPage.getRecords();
+        List<UserVo> userVoList = records.stream().map(user -> userService.getSafeUser(user)).collect(Collectors.toList());
+        userVoPage.setTotal(userPage.getTotal());
+        userVoPage.setCurrent(userPage.getCurrent());
+        userVoPage.setSize(userPage.getSize());
+        userVoPage.setPages(userPage.getPages());
+        userVoPage.setRecords(userVoList);
+        userVoPage.setOptimizeCountSql(userPage.optimizeCountSql());
+        userVoPage.setSearchCount(userPage.searchCount());
+        userVoPage.setCountId(userPage.countId());
+        userVoPage.setMaxLimit(userPage.maxLimit());
+        return userVoPage;
+    }
+
 }
