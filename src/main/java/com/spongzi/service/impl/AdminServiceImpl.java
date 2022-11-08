@@ -1,12 +1,8 @@
 package com.spongzi.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spongzi.domain.User;
 import com.spongzi.domain.dto.UserLoginDto;
-import com.spongzi.domain.vo.UserVo;
 import com.spongzi.exception.BlogException;
 import com.spongzi.exception.BlogExceptionEnum;
 import com.spongzi.mapper.UserMapper;
@@ -18,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.spongzi.constant.UserConstant.*;
 
@@ -68,6 +64,11 @@ public class AdminServiceImpl extends ServiceImpl<UserMapper, User> implements A
         return token;
     }
 
+    @Override
+    public String deleteByIds(List<Long> ids) {
+        userMapper.deleteBatchIds(ids);
+        return "删除成功";
+    }
 
 
 }

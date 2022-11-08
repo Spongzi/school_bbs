@@ -30,4 +30,9 @@ public class AdminController {
     public Result<String> login(@RequestBody UserLoginDto userLoginDto) {
         return Result.success(adminService.login(userLoginDto));
     }
+
+    @PostMapping("/delete")
+    public Result<String> deleteByIds(@RequestBody List<Long> ids) {
+        return Result.success(adminService.deleteByIds(ids));
+    }
 }

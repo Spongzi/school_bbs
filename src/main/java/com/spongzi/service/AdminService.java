@@ -1,10 +1,8 @@
 package com.spongzi.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spongzi.domain.User;
 import com.spongzi.domain.dto.UserLoginDto;
-import com.spongzi.domain.vo.UserVo;
 
 import java.util.List;
 
@@ -22,4 +20,12 @@ public interface AdminService extends IService<User> {
      * @return {@link String}
      */
     String login(UserLoginDto userLoginDto);
+
+    /**
+     * 删除 通过 ids
+     *
+     * @param ids id
+     * @return {@link String}
+     */
+    String deleteByIds(List<Long> ids);
 }

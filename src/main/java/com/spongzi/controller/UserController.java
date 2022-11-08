@@ -90,7 +90,7 @@ public class UserController {
         return Result.success(userService.upload(file));
     }
 
-    @PostMapping("/select")
+    @GetMapping("/select")
     public Result<Page<UserVo>> selectUser(@RequestParam(value = "gender", required = false) String gender,
                                            @RequestParam(value = "page", required = false) String page,
                                            @RequestParam(value = "pagesize", required = false) String pagesize,
