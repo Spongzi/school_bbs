@@ -1,6 +1,7 @@
 package com.spongzi.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spongzi.domain.dto.UserModifyDto;
 import com.spongzi.domain.dto.UserPasswordModifyDto;
@@ -27,10 +28,12 @@ import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static com.spongzi.constant.UserConstant.*;
 
@@ -389,6 +392,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setAvatar(headUrl);
         userMapper.updateById(user);
         return "修改头像成功";
+    }
+
+    @Override
+    public Page<UserVo> selectUser(String page, String pagesize, String username, String gender, String status) {
+        Page<User> userPage = new Page<>(Integer.parseInt(page), Integer.parseInt(pagesize));
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(!StringUtils.isBlank(username), User::getUsername, username);
+        queryWrapper.eq(!StringUtils.isBlank(gender), User::getGender, gender);
+        queryWrapper.eq(!StringUtils.isBlank(status), User::getUserStatus, status);
+        userMapper.selectPage(userPage, queryWrapper);
+        Page<UserVo> userVoPage = new Page<>();
+
+        // 进行去敏操作
+        List<User> records = userPage.getRecords();
+        List<UserVo> userVoList = records.stream().map(user -> getSafeUser(user)).collect(Collectors.toList());
+        userVoPage.setTotal(userPage.getTotal());
+        userVoPage.setCurrent(userPage.getCurrent());
+        userVoPage.setSize(userPage.getSize());
+        userVoPage.setPages(userPage.getPages());
+        userVoPage.setRecords(userVoList);
+        userVoPage.setOptimizeCountSql(userPage.optimizeCountSql());
+        userVoPage.setSearchCount(userPage.searchCount());
+        userVoPage.setCountId(userPage.countId());
+        userVoPage.setMaxLimit(userPage.maxLimit());
+        return userVoPage;
     }
 }
 

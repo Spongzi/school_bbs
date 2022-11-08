@@ -22,16 +22,4 @@ public interface AdminService extends IService<User> {
      * @return {@link String}
      */
     String login(UserLoginDto userLoginDto);
-
-    /**
-     * 查询用户
-     *
-     * @param page     页面
-     * @param pagesize 页大小
-     * @param username 用户名
-     * @param gender   性别
-     * @param status   状态
-     * @return {@link Page}<{@link List}<{@link User}>>
-     */
-    Page<UserVo> selectUser(String page, String pagesize, String username, String gender, String status);
 }

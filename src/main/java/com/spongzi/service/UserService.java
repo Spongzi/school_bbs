@@ -1,5 +1,6 @@
 package com.spongzi.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spongzi.domain.User;
 import com.spongzi.domain.dto.UserModifyDto;
@@ -7,6 +8,8 @@ import com.spongzi.domain.dto.UserPasswordModifyDto;
 import com.spongzi.domain.dto.UserRegisterDto;
 import com.spongzi.domain.vo.UserVo;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @author spongzi
@@ -123,4 +126,16 @@ public interface UserService extends IService<User> {
      * @return 返回图片地址
      */
     String upload(MultipartFile file);
+
+    /**
+     * 查询用户
+     *
+     * @param page     页面
+     * @param pagesize 页大小
+     * @param username 用户名
+     * @param gender   性别
+     * @param status   状态
+     * @return {@link Page}<{@link List}<{@link User}>>
+     */
+    Page<UserVo> selectUser(String page, String pagesize, String username, String gender, String status);
 }

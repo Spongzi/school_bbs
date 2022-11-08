@@ -6,6 +6,7 @@ import com.spongzi.domain.User;
 import com.spongzi.domain.dto.UserLoginDto;
 import com.spongzi.domain.vo.UserVo;
 import com.spongzi.service.AdminService;
+import com.spongzi.service.UserService;
 import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,15 +29,5 @@ public class AdminController {
     @PostMapping("/login")
     public Result<String> login(@RequestBody UserLoginDto userLoginDto) {
         return Result.success(adminService.login(userLoginDto));
-    }
-
-    @GetMapping("/selectUser")
-    public Result<Page<UserVo>> selectUser(@RequestParam(value = "gender", required = false) String gender,
-                                           @RequestParam(value = "page", required = false) String page,
-                                           @RequestParam(value = "pagesize", required = false) String pagesize,
-                                           @RequestParam(value = "status", required = false) String status,
-                                           @RequestParam(value = "username", required = false) String username) {
-        log.info(page);
-        return Result.success(adminService.selectUser(page, pagesize, username, gender, status));
     }
 }

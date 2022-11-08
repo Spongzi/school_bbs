@@ -68,29 +68,6 @@ public class AdminServiceImpl extends ServiceImpl<UserMapper, User> implements A
         return token;
     }
 
-    @Override
-    public Page<UserVo> selectUser(String page, String pagesize, String username, String gender, String status) {
-        Page<User> userPage = new Page<>(Integer.parseInt(page), Integer.parseInt(pagesize));
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(!StringUtils.isBlank(username), User::getUsername, username);
-        queryWrapper.eq(!StringUtils.isBlank(gender), User::getGender, gender);
-        queryWrapper.eq(!StringUtils.isBlank(status), User::getUserStatus, status);
-        userMapper.selectPage(userPage, queryWrapper);
-        Page<UserVo> userVoPage = new Page<>();
 
-        // 进行去敏操作
-        List<User> records = userPage.getRecords();
-        List<UserVo> userVoList = records.stream().map(user -> userService.getSafeUser(user)).collect(Collectors.toList());
-        userVoPage.setTotal(userPage.getTotal());
-        userVoPage.setCurrent(userPage.getCurrent());
-        userVoPage.setSize(userPage.getSize());
-        userVoPage.setPages(userPage.getPages());
-        userVoPage.setRecords(userVoList);
-        userVoPage.setOptimizeCountSql(userPage.optimizeCountSql());
-        userVoPage.setSearchCount(userPage.searchCount());
-        userVoPage.setCountId(userPage.countId());
-        userVoPage.setMaxLimit(userPage.maxLimit());
-        return userVoPage;
-    }
 
 }

@@ -1,5 +1,6 @@
 package com.spongzi.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spongzi.common.Result;
 import com.spongzi.domain.User;
 import com.spongzi.domain.dto.UserLoginDto;
@@ -85,10 +86,19 @@ public class UserController {
     }
 
     @PostMapping("/upload")
-    public Result<String> uploadHead(@RequestParam("file")MultipartFile file) {
+    public Result<String> uploadHead(@RequestParam("file") MultipartFile file) {
         return Result.success(userService.upload(file));
     }
 
+    @PostMapping("/select")
+    public Result<Page<UserVo>> selectUser(@RequestParam(value = "gender", required = false) String gender,
+                                           @RequestParam(value = "page", required = false) String page,
+                                           @RequestParam(value = "pagesize", required = false) String pagesize,
+                                           @RequestParam(value = "status", required = false) String status,
+                                           @RequestParam(value = "username", required = false) String username) {
+        log.info(page);
+        return Result.success(userService.selectUser(page, pagesize, username, gender, status));
+    }
 
     @PostMapping("/sendMsg")
     public Result<String> getPhoneCode(@Param("phone") String phone) {
