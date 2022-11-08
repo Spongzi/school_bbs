@@ -406,7 +406,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 进行去敏操作
         List<User> records = userPage.getRecords();
-        List<UserVo> userVoList = records.stream().map(user -> getSafeUser(user)).collect(Collectors.toList());
+        List<UserVo> userVoList = records.stream().map(this::getSafeUser).collect(Collectors.toList());
         userVoPage.setTotal(userPage.getTotal());
         userVoPage.setCurrent(userPage.getCurrent());
         userVoPage.setSize(userPage.getSize());
