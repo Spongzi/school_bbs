@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -68,6 +69,23 @@ public class AdminServiceImpl extends ServiceImpl<UserMapper, User> implements A
     public String deleteByIds(List<Long> ids) {
         userMapper.deleteBatchIds(ids);
         return "删除成功";
+    }
+
+    @Override
+    public String modifyStatus(String status, List<Long> ids) {
+        // 先查询出所有人的信息
+        List<User> userList = new ArrayList<>();
+        ids.forEach(id -> {
+            User user = userMapper.selectById(id);
+            if (user == null) {
+                throw new BlogException(BlogExceptionEnum.USER_NOT_EXIST);
+            }
+            // 修改用户中的用户状态
+            user.setUserStatus(status);
+            userList.add(user);
+        });
+        userService.updateBatchById(userList);
+        return "修改成功";
     }
 
 

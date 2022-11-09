@@ -35,4 +35,16 @@ public class AdminController {
     public Result<String> deleteByIds(@RequestBody List<Long> ids) {
         return Result.success(adminService.deleteByIds(ids));
     }
+
+    /**
+     * TODO 没有测试
+     *
+     * @param status 状态码
+     * @return 返回结果
+     */
+    @PostMapping("/status/{status}")
+    public Result<String> modifyStatus(@PathVariable String status, @RequestBody List<Long> ids) {
+        return Result.success(adminService.modifyStatus(status, ids));
+    }
+
 }

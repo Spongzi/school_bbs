@@ -28,4 +28,13 @@ public interface AdminService extends IService<User> {
      * @return {@link String}
      */
     String deleteByIds(List<Long> ids);
+
+    /**
+     * 修改状态
+     *
+     * @param status 状态
+     * @param ids    id
+     * @return {@link String}
+     */
+    String modifyStatus(String status, List<Long> ids);
 }
