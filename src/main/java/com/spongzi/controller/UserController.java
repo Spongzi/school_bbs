@@ -113,4 +113,9 @@ public class UserController {
         userService.sendEmailMsg(email);
         return Result.success(NULL_VALUE, "获取验证码成功");
     }
+
+    @GetMapping("/logout")
+    public Result<Object> logout() {
+        return Result.success(NULL_VALUE, "退出登录成功");
+    }
 }
