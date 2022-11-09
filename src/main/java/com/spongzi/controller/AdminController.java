@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static com.spongzi.constant.GlobalConstant.NULL_VALUE;
+
 /**
  * 管理控制器
  *
@@ -28,13 +30,13 @@ public class AdminController {
     }
 
     @PostMapping("/delete")
-    public Result<String> deleteByIds(@RequestBody List<Long> ids) {
-        return Result.success(adminService.deleteByIds(ids));
+    public Result<Object> deleteByIds(@RequestBody List<Long> ids) {
+        return Result.success(NULL_VALUE, adminService.deleteByIds(ids));
     }
 
     @PostMapping("/status/{status}")
-    public Result<String> modifyStatus(@PathVariable String status, @RequestBody List<Long> ids) {
-        return Result.success(adminService.modifyStatus(status, ids));
+    public Result<Object> modifyStatus(@PathVariable String status, @RequestBody List<Long> ids) {
+        return Result.success(NULL_VALUE, adminService.modifyStatus(status, ids));
     }
 
 }

@@ -372,7 +372,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         // 更新数据库用户信息
         userMapper.updateById(user);
-        return null;
+        return "修改信息成功";
     }
 
     @Override

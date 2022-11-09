@@ -30,6 +30,20 @@ public class Result<T> {
     }
 
     /**
+     * 成功 有数据 但是有msg
+     *
+     * @param <T> 泛型
+     * @return 返回result结果类
+     */
+    public static <T> Result<T> success(T data ,String msg) {
+        Result<T> result = new Result<>();
+        result.setCode(200);
+        result.setData(data);
+        result.setMsg(msg);
+        return result;
+    }
+
+    /**
      * 成功 带有数据
      *
      * @param data 数据

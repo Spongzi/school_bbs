@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
+import static com.spongzi.constant.GlobalConstant.NULL_VALUE;
 import static com.spongzi.constant.UserConstant.USER_LOGIN_BY_CHECK_CODE;
 import static com.spongzi.constant.UserConstant.USER_LOGIN_BY_PASSWORD;
 
@@ -56,9 +57,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Result<String> register(@RequestBody UserRegisterDto userRegisterDto) {
+    public Result<Object> register(@RequestBody UserRegisterDto userRegisterDto) {
         log.info("register");
-        return Result.success(userService.registerByPhoneCode(userRegisterDto));
+        return Result.success(NULL_VALUE, userService.registerByPhoneCode(userRegisterDto));
     }
 
     @GetMapping(value = {"/info/{id}", "/info"})
@@ -76,18 +77,18 @@ public class UserController {
      * @return 返回结果
      */
     @PostMapping("/password")
-    public Result<String> modifyPassword(@RequestBody UserPasswordModifyDto userPasswordModifyDto) {
-        return Result.success(userService.modifyPassword(userPasswordModifyDto));
+    public Result<Object> modifyPassword(@RequestBody UserPasswordModifyDto userPasswordModifyDto) {
+        return Result.success(NULL_VALUE, userService.modifyPassword(userPasswordModifyDto));
     }
 
     @PostMapping("/modify")
-    public Result<String> modifyUserInfo(@RequestBody UserModifyDto userModifyDto) {
-        return Result.success(userService.modifyUserInfo(userModifyDto));
+    public Result<Object> modifyUserInfo(@RequestBody UserModifyDto userModifyDto) {
+        return Result.success(NULL_VALUE, userService.modifyUserInfo(userModifyDto));
     }
 
     @PostMapping("/upload")
-    public Result<String> uploadHead(@RequestParam("file") MultipartFile file) {
-        return Result.success(userService.upload(file));
+    public Result<Object> uploadHead(@RequestParam("file") MultipartFile file) {
+        return Result.success(NULL_VALUE, userService.upload(file));
     }
 
     @GetMapping("/select")
@@ -101,15 +102,15 @@ public class UserController {
     }
 
     @PostMapping("/sendMsg")
-    public Result<String> getPhoneCode(@Param("phone") String phone) {
+    public Result<Object> getPhoneCode(@Param("phone") String phone) {
         userService.sendMsg(phone);
-        return Result.success("获取验证码成功");
+        return Result.success(NULL_VALUE, "获取验证码成功");
     }
 
     @PostMapping("/sendEmail")
-    public Result<String> getEmailCode(@Param("email") String email) {
+    public Result<Object> getEmailCode(@Param("email") String email) {
         log.info(email);
         userService.sendEmailMsg(email);
-        return Result.success("获取验证码成功");
+        return Result.success(NULL_VALUE, "获取验证码成功");
     }
 }

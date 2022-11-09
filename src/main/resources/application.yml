@@ -1,5 +1,6 @@
 spring:
   profiles:
+    # prod dev
     active: prod
   application:
     name: bbs_school
