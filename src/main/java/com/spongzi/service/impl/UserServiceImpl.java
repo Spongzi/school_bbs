@@ -226,6 +226,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void sendEmailMsg(String email) {
+        String check = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p = Pattern.compile(check);
+        Matcher matcher = p.matcher(email);
+        if (StringUtils.isBlank(email) && !matcher.find()) {
+            throw new BlogException(BlogExceptionEnum.USER_EMAIL_ERROR);
+        }
         // 根据邮箱查询用户, 如果用户存在, 判断是否被冻结
         User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getEmail, email));
         if (user != null && USER_FREEZE.equals(user.getUserStatus())) {
