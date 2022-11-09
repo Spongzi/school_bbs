@@ -30,6 +30,7 @@ public interface AdminService extends IService<User> {
     String deleteByIds(List<Long> ids);
 
     /**
+     * TODO 没有测试
      * 修改状态
      *
      * @param status 状态

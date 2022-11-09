@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/bbs_school
+      username: root
+      password: root
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+  application:
+    name: blog_school_backend
+
+  mail:
+    host: smtp.163.com
+    username: spongziwork@163.com
+    password: NZHWWYAFTMSZNPDT
+    protocol: smtp
+    default-encoding: UTF-8
+    port: 25
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.socketFactory.port: 465
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      mail.smtp.socketFactory.fallback: false
+
+server:
+  port: 8081
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:/mapper/*.xml
+aliyun:
+  secretId: "xxxx"
+  secretKey: "xxxx"
+  signName: "xxxx"
+  templateCode: "xxxx"
+qiqiu:
+  accessKey: "eDbUz-paiwJwECZkWTiC5jiuoWiBrN6S_xPu1_N3"
+  secretKey: "YwM49SSnv5TJltC67ukNFp5XIimjoNwiVk-x3msW"
+  bucket: "bbs-school-nesoft"
