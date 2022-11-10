@@ -1,11 +1,15 @@
 package com.spongzi.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spongzi.domain.Article;
 import com.spongzi.service.ArticleService;
 import com.spongzi.mapper.ArticleMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * 文章服务impl
@@ -18,9 +22,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
+    @Resource
+    private ArticleMapper articleMapper;
+
     @Override
-    public Page<Article> selectArticle(Integer page, Integer pageSize, String keyWord) {
-        return null;
+    public Page<Article> searchArticle(Integer page, Integer pagesize, String keyWord) {
+        Page<Article> articlePage = new Page<>(page, pagesize);
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        if (!StringUtils.isBlank(keyWord)) {
+            queryWrapper.like(Article::getTitle, keyWord);
+            queryWrapper.like(Article::getContent, keyWord);
+        }
+        articleMapper.selectPage(articlePage, queryWrapper);
+        return articlePage;
     }
 }
 

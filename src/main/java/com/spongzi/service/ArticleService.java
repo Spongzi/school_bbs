@@ -15,12 +15,12 @@ import com.spongzi.domain.Article;
 public interface ArticleService extends IService<Article> {
 
     /**
-     * 选择文章
+     * 搜索文章
      *
      * @param page     页面
-     * @param pageSize 页面大小
+     * @param pagesize 页大小
      * @param keyWord  关键字
-     * @return 分页查询文章的结果
+     * @return 返回查询到的分页数据
      */
-    Page<Article> selectArticle(Integer page, Integer pageSize, String keyWord);
+    Page<Article> searchArticle(Integer page, Integer pagesize, String keyWord);
 }

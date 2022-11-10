@@ -4,21 +4,28 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import lombok.Data;
+import lombok.Value;
 
 /**
+ * 文章
  * 文章表
+ *
+ * @author spongzi
  * @TableName article
+ * @date 2022/11/10
  */
-@TableName(value ="article")
+@TableName(value = "article")
 @Data
 public class Article implements Serializable {
     /**
      * 文章id
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -58,6 +65,7 @@ public class Article implements Serializable {
 
     /**
      * 分类id
+     * 0 - 默认类型
      */
     private Integer cid;
 
