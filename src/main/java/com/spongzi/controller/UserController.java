@@ -86,11 +86,6 @@ public class UserController {
         return Result.success(NULL_VALUE, userService.modifyUserInfo(userModifyDto));
     }
 
-    @PostMapping("/upload")
-    public Result<Object> uploadHead(@RequestParam("file") MultipartFile file) {
-        return Result.success(NULL_VALUE, userService.upload(file));
-    }
-
     @GetMapping("/select")
     public Result<Page<UserVo>> selectUser(@RequestParam(value = "gender", required = false) String gender,
                                            @RequestParam(value = "page", required = false) String page,

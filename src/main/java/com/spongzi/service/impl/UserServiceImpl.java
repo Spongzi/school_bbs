@@ -389,19 +389,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String upload(MultipartFile file) {
-        String headUrl = uploadImage.upload(file);
-        Long userId = UserHolder.getUserId();
-        User user = userMapper.selectById(userId);
-        if (user == null) {
-            throw new BlogException(BlogExceptionEnum.USER_NOT_EXIST);
-        }
-        user.setAvatar(headUrl);
-        userMapper.updateById(user);
-        return "修改头像成功";
-    }
-
-    @Override
     public Page<UserVo> selectUser(String page, String pagesize, String username, String gender, String status) {
         Page<User> userPage = new Page<>(Integer.parseInt(page), Integer.parseInt(pagesize));
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();

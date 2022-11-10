@@ -103,7 +103,6 @@ public interface UserService extends IService<User> {
     /**
      * 修改用户信息
      *
-     *
      * @param userModifyDto 用户修改dto
      * @return {@link String}
      */
@@ -118,14 +117,6 @@ public interface UserService extends IService<User> {
      * @return {@link User}
      */
     User findUser(Long id, String username, String email);
-
-    /**
-     * 上传
-     *
-     * @param file 文件
-     * @return 返回图片地址
-     */
-    String upload(MultipartFile file);
 
     /**
      * 查询用户
