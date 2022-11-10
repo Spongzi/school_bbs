@@ -1,7 +1,8 @@
 package com.spongzi.service;
 
-import com.spongzi.domain.Article;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spongzi.domain.Article;
 
 /**
  * 服务条
@@ -13,4 +14,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ArticleService extends IService<Article> {
 
+    /**
+     * 选择文章
+     *
+     * @param page     页面
+     * @param pageSize 页面大小
+     * @param keyWord  关键字
+     * @return 分页查询文章的结果
+     */
+    Page<Article> selectArticle(Integer page, Integer pageSize, String keyWord);
 }

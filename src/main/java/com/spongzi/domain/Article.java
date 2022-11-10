@@ -9,11 +9,8 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 /**
- * 文章
- *
- * @author spongzi
+ * 文章表
  * @TableName article
- * @date 2022/11/10
  */
 @TableName(value ="article")
 @Data
@@ -21,23 +18,63 @@ public class Article implements Serializable {
     /**
      * 文章id
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId
     private Long id;
 
     /**
-     * 作者
-     */
-    private Long authorId;
-
-    /**
-     * 文章名
+     * 标题
      */
     private String title;
 
     /**
+     * 作者
+     */
+    private String author;
+
+    /**
+     * 作者id
+     */
+    private Long authorId;
+
+    /**
      * 文章内容
      */
-    private String context;
+    private String content;
+
+    /**
+     * 关键字
+     */
+    private String keywords;
+
+    /**
+     * 描述
+     */
+    private String description;
+
+    /**
+     * 点击数
+     */
+    private Integer click;
+
+    /**
+     * 分类id
+     */
+    private Integer cid;
+
+    /**
+     * 文章是否显示 1是 0否
+     */
+    private Integer isShow;
+
+    /**
+     * 是否置顶 1是 0否
+     */
+    private Integer isTop;
+
+    /**
+     * 是否原创
+     */
+    private Integer isOriginal;
 
     /**
      * 创建时间

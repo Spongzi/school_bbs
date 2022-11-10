@@ -1,7 +1,8 @@
 package com.spongzi.mapper;
 
-import com.spongzi.domain.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.spongzi.domain.Article;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 文章映射器
@@ -12,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Entity com.spongzi.domain.Article
  * @date 2022/11/10
  */
+@Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
 }

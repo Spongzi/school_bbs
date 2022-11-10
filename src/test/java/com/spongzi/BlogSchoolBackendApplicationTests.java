@@ -14,4 +14,11 @@ import java.util.Date;
 @SpringBootTest
 class BlogSchoolBackendApplicationTests {
 
+    @Resource
+    private UserService userService;
+
+    @Test
+    void test() {
+        System.out.println(userService.encryptionPassword("123456", "admin"));
+    }
 }

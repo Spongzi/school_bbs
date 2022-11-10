@@ -5,19 +5,28 @@
 <mapper namespace="com.spongzi.mapper.ArticleMapper">
 
     <resultMap id="BaseResultMap" type="com.spongzi.domain.Article">
-        <result property="id" column="id" jdbcType="BIGINT"/>
-        <result property="authorId" column="author_id" jdbcType="BIGINT"/>
-        <result property="title" column="title" jdbcType="VARCHAR"/>
-        <result property="context" column="context" jdbcType="VARCHAR"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="CHAR"/>
+            <result property="author" column="author" jdbcType="VARCHAR"/>
+            <result property="authorId" column="author_id" jdbcType="BIGINT"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="keywords" column="keywords" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="CHAR"/>
+            <result property="click" column="click" jdbcType="INTEGER"/>
+            <result property="cid" column="cid" jdbcType="TINYINT"/>
+            <result property="isShow" column="is_show" jdbcType="TINYINT"/>
+            <result property="isTop" column="is_top" jdbcType="TINYINT"/>
+            <result property="isOriginal" column="is_original" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id
-        ,author_id,title,
-        context,create_time,update_time,
-        is_deleted
+        id,title,author,
+        author_id,content,keywords,
+        description,click,cid,
+        is_show,is_top,is_original,
+        create_time,update_time,is_deleted
     </sql>
 </mapper>
