@@ -32,7 +32,8 @@ public enum BlogExceptionEnum {
     USER_OLD_PASSWORD_SAME(20009, "用户新密码与就旧密码相同", "用户新密码与旧密码相同"),
     USER_GET_CODE_ERROR(20010, "用户获取验证码失败", "用户获取验证码失败，请重新获取"),
     USER_PERMISSION_ERROR(20011, "用户权限错误", "用户权限不足请联系管理员"),
-    USER_EMAIL_ERROR(20012, "用户输入邮箱错误", "请检查用户输入的邮箱");
+    USER_EMAIL_ERROR(20012, "用户输入邮箱错误", "请检查用户输入的邮箱"),
+    USER_UPLOAD_FILE_ERROR(20013, "用户上传的文件错误", "用户上传的文件出现错误");
 
     /**
      * code 返回请求码

@@ -21,4 +21,16 @@ public interface GlobalConstant {
      * 文章上传图片
      */
     String ARTICLE_UPLOAD_IMAGE = "article";
+
+    /**
+     * 图像主题
+     */
+    String IMAGE_DOMAIN = "http://rkz2uwfmm.hn-bkt.clouddn.com/";
+
+    /**
+     * 用户上传头关键
+     */
+    String USER_UPLOAD_HEAD_KEY = "head/";
+
+    String DATE_FORMAT = "yyyy-MM-dd";
 }
