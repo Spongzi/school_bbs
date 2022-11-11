@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.spongzi.domain.Article;
 import com.spongzi.service.ArticleService;
 import com.spongzi.mapper.ArticleMapper;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
-import static com.spongzi.constant.ArticleConstant.ARTICLE_CLICK_REDIS_KEY;
+import static com.spongzi.constant.ArticleConstant.ARTICLE_REDIS_KEY;
 
 /**
  * 文章服务impl
@@ -52,7 +51,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<Article> records = articlePage.getRecords();
         records.forEach(article -> {
             Integer click;
-            Article articleRedis = (Article) redisTemplate.opsForValue().get(ARTICLE_CLICK_REDIS_KEY + article.getId());
+            Article articleRedis = (Article) redisTemplate.opsForValue().get(ARTICLE_REDIS_KEY + article.getId());
             // 如果从redis中查询到的结果为空值，那么设置为数据库中的值
             // 否则就调用redis中查询到的值
             if (articleRedis == null) {
@@ -68,7 +67,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Article show(String articleId) {
         // 1. 先查询redis中是否包含数据
-        String articleJson = (String) redisTemplate.opsForValue().get(ARTICLE_CLICK_REDIS_KEY + articleId);
+        String articleJson = (String) redisTemplate.opsForValue().get(ARTICLE_REDIS_KEY + articleId);
         Article article = gson.fromJson(articleJson, Article.class);
         // 如果redis里存在数据返回
         // 否则去数据库中查询
@@ -77,7 +76,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         article.setClick(article.getClick() + 1);
         String json = gson.toJson(article);
         log.info("json value is: " + json);
-        redisTemplate.opsForValue().set(ARTICLE_CLICK_REDIS_KEY + articleId, json);
+        redisTemplate.opsForValue().set(ARTICLE_REDIS_KEY + articleId, json);
         return article;
     }
 }

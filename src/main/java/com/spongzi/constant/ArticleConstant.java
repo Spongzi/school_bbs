@@ -13,7 +13,7 @@ public interface ArticleConstant {
     String IS_SHOW = "1";
 
     /**
-     * 点击文章 存储redis的关键字
+     * 文章 存储redis的关键字
      */
-    String ARTICLE_CLICK_REDIS_KEY = "article";
+    String ARTICLE_REDIS_KEY = "article";
 }
