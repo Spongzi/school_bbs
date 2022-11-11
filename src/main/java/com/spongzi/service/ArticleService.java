@@ -23,4 +23,12 @@ public interface ArticleService extends IService<Article> {
      * @return 返回查询到的分页数据
      */
     Page<Article> searchArticle(Integer page, Integer pagesize, String keyWord);
+
+    /**
+     * 浏览
+     *
+     * @param articleId 文章id
+     * @return {@link String}
+     */
+    Integer browse(String articleId);
 }

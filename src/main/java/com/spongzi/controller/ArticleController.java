@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spongzi.common.Result;
 import com.spongzi.domain.Article;
 import com.spongzi.service.ArticleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+
+import static com.spongzi.constant.GlobalConstant.NULL_VALUE;
 
 /**
  * 文章控制器
@@ -27,7 +26,12 @@ public class ArticleController {
     @GetMapping("/search")
     public Result<Page<Article>> searchArticle(@RequestParam("page") Integer page,
                                                  @RequestParam("pagesize") Integer pagesize,
-                                                 @RequestParam(value = "keword", required = false) String keyWord) {
+                                                 @RequestParam(value = "keyword", required = false) String keyWord) {
         return Result.success(articleService.searchArticle(page, pagesize, keyWord));
+    }
+
+    @PostMapping("/browse/{articleId}")
+    public Result<Integer> browseArticle(@PathVariable String articleId) {
+        return Result.success(articleService.browse(articleId));
     }
 }
