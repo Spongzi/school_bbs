@@ -8,14 +8,13 @@ import com.spongzi.exception.BlogExceptionEnum;
 import com.spongzi.mapper.UserMapper;
 import com.spongzi.service.AdminService;
 import com.spongzi.service.UserService;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.spongzi.constant.UserConstant.*;
@@ -26,7 +25,7 @@ import static com.spongzi.constant.UserConstant.*;
  * @author spongzi
  * @date 2022/11/07
  */
-@Log
+@Slf4j
 @Service
 public class AdminServiceImpl extends ServiceImpl<UserMapper, User> implements AdminService {
 

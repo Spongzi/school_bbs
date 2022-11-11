@@ -8,6 +8,7 @@ import com.spongzi.domain.Article;
 import com.spongzi.service.ArticleService;
 import com.spongzi.mapper.ArticleMapper;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ import static com.spongzi.constant.ArticleConstant.ARTICLE_CLICK_REDIS_KEY;
  * @createDate 2022-11-10 15:10:34
  * @date 2022/11/10
  */
-@Log
+@Slf4j
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 

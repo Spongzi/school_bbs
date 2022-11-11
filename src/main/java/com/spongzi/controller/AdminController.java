@@ -4,6 +4,7 @@ import com.spongzi.common.Result;
 import com.spongzi.domain.dto.UserLoginDto;
 import com.spongzi.service.AdminService;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,7 +18,7 @@ import static com.spongzi.constant.GlobalConstant.NULL_VALUE;
  * @author spongzi
  * @date 2022/11/07
  */
-@Log
+@Slf4j
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

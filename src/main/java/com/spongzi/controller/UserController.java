@@ -12,6 +12,7 @@ import com.spongzi.exception.BlogException;
 import com.spongzi.interceptor.UserHolder;
 import com.spongzi.service.UserService;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,7 @@ import static com.spongzi.constant.UserConstant.USER_LOGIN_BY_PASSWORD;
  *
  * @author spongzi
  */
-@Log
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {

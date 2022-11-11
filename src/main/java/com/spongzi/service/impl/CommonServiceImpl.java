@@ -8,6 +8,7 @@ import com.spongzi.service.CommonService;
 import com.spongzi.service.UserService;
 import com.spongzi.utlis.UploadImage;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +27,7 @@ import static com.spongzi.constant.GlobalConstant.*;
  * @author spongzi
  * @date 2022/11/10
  */
-@Log
+@Slf4j
 @Service
 public class CommonServiceImpl implements CommonService {
 

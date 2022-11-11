@@ -17,6 +17,7 @@ import com.spongzi.utlis.SendEmail;
 import com.spongzi.utlis.TokenUtil;
 import com.spongzi.utlis.UploadImage;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -42,7 +43,7 @@ import static com.spongzi.constant.UserConstant.*;
  * @description 针对表【user(用户表信息)】的数据库操作Service实现
  * @createDate 2022-11-04 12:31:48
  */
-@Log
+@Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
