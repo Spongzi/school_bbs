@@ -30,8 +30,8 @@ public class ArticleController {
         return Result.success(articleService.searchArticle(page, pagesize, keyWord));
     }
 
-    @PostMapping("/browse/{articleId}")
-    public Result<Integer> browseArticle(@PathVariable String articleId) {
-        return Result.success(articleService.browse(articleId));
+    @PostMapping("/show/{articleId}")
+    public Result<Article> browseArticle(@PathVariable String articleId) {
+        return Result.success(articleService.show(articleId));
     }
 }

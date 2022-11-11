@@ -30,5 +30,5 @@ public interface ArticleService extends IService<Article> {
      * @param articleId 文章id
      * @return {@link String}
      */
-    Integer browse(String articleId);
+    Article show(String articleId);
 }
