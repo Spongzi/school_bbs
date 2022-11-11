@@ -196,7 +196,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userWrapper.eq(User::getEmail, email);
         user = userMapper.selectOne(userWrapper);
         if (user != null) {
-            throw new BlogException(BlogExceptionEnum.USER_EXIST_ERROR);
+            throw new BlogException(BlogExceptionEnum.USER_EMAIL_RE_ERROR);
         }
 
         User dbUser = new User();

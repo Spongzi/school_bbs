@@ -59,7 +59,7 @@ public class UserController {
     @PostMapping("/register")
     public Result<Object> register(@RequestBody UserRegisterDto userRegisterDto) {
         log.info("register");
-        return Result.success(NULL_VALUE, userService.registerByPhoneCode(userRegisterDto));
+        return Result.success(NULL_VALUE, userService.register(userRegisterDto));
     }
 
     @GetMapping(value = {"/info/{id}", "/info"})
