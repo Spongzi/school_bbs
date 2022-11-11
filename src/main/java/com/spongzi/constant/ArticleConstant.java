@@ -15,5 +15,5 @@ public interface ArticleConstant {
     /**
      * 点击文章 存储redis的关键字
      */
-    String ARTICLE_CLICK_REDIS_KEY = "article_click";
+    String ARTICLE_CLICK_REDIS_KEY = "article";
 }
