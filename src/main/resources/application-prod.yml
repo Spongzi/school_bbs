@@ -40,3 +40,9 @@ qiqiu:
   accessKey: "eDbUz-paiwJwECZkWTiC5jiuoWiBrN6S_xPu1_N3"
   secretKey: "YwM49SSnv5TJltC67ukNFp5XIimjoNwiVk-x3msW"
   bucket: "bbs-school-nesoft"
+logging:
+  level:
+    # 输出级别
+    root: warn
+    # 特定的mapper下的输出级别
+    com.example.demo.mapper: debug
