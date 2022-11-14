@@ -17,7 +17,7 @@ public enum BlogExceptionEnum {
     /**
      * 参数错误
      */
-    PARAM_ERROR(20001, "参数错误", "前端发送的参数错误"),
+    PARAM_ERROR(20001, "参数错误", "用户传入的参数错误"),
 
     /**
      * 用户信息错误
@@ -34,7 +34,13 @@ public enum BlogExceptionEnum {
     USER_PERMISSION_ERROR(20011, "用户权限错误", "用户权限不足请联系管理员"),
     USER_EMAIL_ERROR(20012, "用户输入邮箱错误", "请检查用户输入的邮箱"),
     USER_UPLOAD_FILE_ERROR(20013, "用户上传的文件错误", "用户上传的文件出现错误"),
-    USER_EMAIL_RE_ERROR(20014, "用户邮箱已被注册", "用户邮箱已经被注册请更换其他邮箱");
+    USER_EMAIL_RE_ERROR(20014, "用户邮箱已被注册", "用户邮箱已经被注册请更换其他邮箱"),
+
+    /**
+     * 文章相关的错误
+     */
+    ARTICLE_POST_ERROR(20015, "文章发布失败", "文章发布失败")
+    ;
 
     /**
      * code 返回请求码

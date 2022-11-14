@@ -40,6 +40,12 @@ public class BlogException extends RuntimeException {
         this.desc = exceptionEnum.getDesc();
     }
 
+    public BlogException(@NotNull BlogExceptionEnum exceptionEnum, String desc) {
+        this.code = exceptionEnum.getCode();
+        this.msg = exceptionEnum.getMsg();
+        this.desc = desc;
+    }
+
     public BlogException(int code, String msg) {
         this.code = code;
         this.msg = msg;

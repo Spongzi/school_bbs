@@ -3,6 +3,7 @@ package com.spongzi.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spongzi.domain.Article;
+import com.spongzi.domain.dto.ArticlePostDto;
 
 /**
  * 服务条
@@ -31,4 +32,12 @@ public interface ArticleService extends IService<Article> {
      * @return {@link String}
      */
     Article show(String articleId);
+
+    /**
+     * 发布文章
+     *
+     * @param articlePostDto 篇帖子dto
+     * @return 返回文章的uri
+     */
+    String postArticle(ArticlePostDto articlePostDto);
 }

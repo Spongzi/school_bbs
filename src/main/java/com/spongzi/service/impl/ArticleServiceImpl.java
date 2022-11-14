@@ -5,8 +5,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import com.spongzi.domain.Article;
+import com.spongzi.domain.User;
+import com.spongzi.domain.dto.ArticlePostDto;
+import com.spongzi.exception.BlogException;
 import com.spongzi.service.ArticleService;
 import com.spongzi.mapper.ArticleMapper;
+import com.spongzi.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,6 +20,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import static com.spongzi.constant.ArticleConstant.ARTICLE_REDIS_KEY;
+import static com.spongzi.exception.BlogExceptionEnum.PARAM_ERROR;
 
 /**
  * 文章服务impl
@@ -33,6 +38,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Resource
     private ArticleMapper articleMapper;
+
+    @Resource
+    private UserService userService;
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
@@ -78,6 +86,54 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         log.info("json value is: " + json);
         redisTemplate.opsForValue().set(ARTICLE_REDIS_KEY + articleId, json);
         return article;
+    }
+
+    @Override
+    public String postArticle(ArticlePostDto articlePostDto) {
+        if (articlePostDto == null) {
+            throw new BlogException(PARAM_ERROR);
+        }
+        String title = articlePostDto.getTitle();
+        Long authorId = articlePostDto.getAuthorId();
+        String content = articlePostDto.getContent();
+        String keywords = articlePostDto.getKeywords();
+        String description = articlePostDto.getDescription();
+        Integer cid = articlePostDto.getCid();
+        Integer isShow = articlePostDto.getIsShow();
+        Integer isOriginal = articlePostDto.getIsOriginal();
+        if (StringUtils.isBlank(title)) {
+            throw new BlogException(PARAM_ERROR, "文章标题不可以为空");
+        }
+        if (authorId == null) {
+            throw new BlogException(PARAM_ERROR);
+        }
+        if (StringUtils.isBlank(content)) {
+            throw new BlogException(PARAM_ERROR, "文章内容不可以为空");
+        }
+        if (StringUtils.isBlank(keywords)) {
+            throw new BlogException(PARAM_ERROR, "文章关键词不可以为空");
+        }
+        if (StringUtils.isBlank(description)) {
+            throw new BlogException(PARAM_ERROR, "文章描述不可以为空");
+        }
+
+        // 查出用户的用户名
+        User user = userService.getById(authorId);
+        String username = user.getUsername();
+
+        // 创建文章实体类
+        Article article = new Article();
+        article.setTitle(title);
+        article.setAuthor(username);
+        article.setAuthorId(authorId);
+        article.setContent(content);
+        article.setKeywords(keywords);
+        article.setDescription(description);
+        article.setCid(cid);
+        article.setIsShow(isShow);
+        article.setIsOriginal(isOriginal);
+        articleMapper.insert(article);
+        return article.getId().toString();
     }
 }
 
