@@ -19,12 +19,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     String[] excludePathPatterns = new String[]{
+            // 放行用户需要的接口
             "/user/login",
             "/user/register",
             "/user/sendMsg",
             "/user/sendEmail",
             "/user/password",
-            "/admin/login"
+            // 放行管理员登录接口
+            "/admin/login",
+            // 放行knife4j需要的静态资源
+            "/doc.html",
+            "/swagger-resources/**",
+            // "/swagger-resources/configuration",
+            "/v3/api-docs",
+            "/v2/api-docs",
+            "/webjars/**"
     };
 
     @Override

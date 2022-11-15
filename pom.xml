@@ -80,7 +80,19 @@
             <artifactId>qiniu-java-sdk</artifactId>
             <version>7.12.0</version>
         </dependency>
-
+        <!--内容识别-->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>5.6.109</version>
+        </dependency>
+        <!--knife4j-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <!--使用Swagger2-->
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
     </dependencies>
 
     <build>

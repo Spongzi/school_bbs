@@ -4,6 +4,9 @@ spring:
     active: dev
   application:
     name: bbs_school
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 mybatis-plus:
   global-config:
     db-config:
